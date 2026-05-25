@@ -1,2 +1,40 @@
- 
-<div>hi its working!</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div>Device coordinates:</div>
+  <div><span>Lat: </span><span id="lat">loading...</span></div>
+  <div><span>Lon: </span><span id="lon">loading...</span></div>
+</body>
+</html>
+
+
+<script>
+  function startCheck() {
+    const options = { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 };
+    navigator.geolocation.getCurrentPosition(
+        (pos) => sendToServer(pos.coords.latitude, pos.coords.longitude),
+        (err) => {
+            if (err.code === err.TIMEOUT) {
+                navigator.geolocation.getCurrentPosition(
+                    (pos) => sendToServer(pos.coords.latitude, pos.coords.longitude),
+                    () => showError(MSG_DENIED),
+                    { enableHighAccuracy: false, timeout: 5000 }
+                );
+            } else {
+                showError(MSG_DENIED);
+            }
+        }, options
+    );
+  }
+
+  function displayCoordinates(lat,lon){
+    console.log('Lat:',lat);
+    console.log('Long:',lon);
+    document.getElementById('lat').innerHTML = lat;
+  }
+</script>
