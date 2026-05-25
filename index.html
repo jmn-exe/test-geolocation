@@ -17,7 +17,7 @@
   function startCheck() {
     const options = { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 };
     navigator.geolocation.getCurrentPosition(
-        (pos) => sendToServer(pos.coords.latitude, pos.coords.longitude),
+        (pos) => displayCoordinates(pos.coords.latitude, pos.coords.longitude),
         (err) => {
             if (err.code === err.TIMEOUT) {
                 navigator.geolocation.getCurrentPosition(
